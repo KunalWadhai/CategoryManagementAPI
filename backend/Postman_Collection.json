@@ -1,0 +1,748 @@
+{
+	"info": {
+		"_postman_id": "category-management-api-collection",
+		"name": "Category Management API",
+		"description": "Complete API collection for Category Management System - Categories, Sub-Categories, and Items",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Check if the server is running and healthy"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Create Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.collectionVariables.set('categoryId', response.data._id);",
+									"        pm.collectionVariables.set('categoryName', response.data.name);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Electronics\",\n    \"image\": \"https://example.com/electronics.jpg\",\n    \"description\": \"Electronic items and gadgets including smartphones, laptops, and accessories\",\n    \"taxApplicability\": true,\n    \"tax\": 10\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						},
+						"description": "Create a new category with name, image, description, tax applicability, and tax percentage.\n\n**Required Fields:**\n- name (String, unique)\n- image (URL)\n- description (String)\n- taxApplicability (Boolean)\n- tax (Number, required if taxApplicability is true)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						},
+						"description": "Retrieve all categories from the database"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/categories/{{categoryId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"{{categoryId}}"
+							]
+						},
+						"description": "Get a specific category by its ID. You can also use the category name instead of ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/categories/{{categoryName}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"{{categoryName}}"
+							]
+						},
+						"description": "Get a specific category by its name. You can also use the category ID instead of name."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Updated description for electronics category\",\n    \"tax\": 12\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/categories/{{categoryId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"{{categoryId}}"
+							]
+						},
+						"description": "Update category attributes. All fields are optional.\n\n**Updatable Fields:**\n- name\n- image\n- description\n- taxApplicability\n- tax"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/categories/{{categoryId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"{{categoryId}}"
+							]
+						},
+						"description": "Delete a category by its ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sub-Categories",
+			"item": [
+				{
+					"name": "Create Sub-Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.collectionVariables.set('subCategoryId', response.data._id);",
+									"        pm.collectionVariables.set('subCategoryName', response.data.name);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Smartphones\",\n    \"image\": \"https://example.com/smartphones.jpg\",\n    \"description\": \"Smartphone devices including iPhone, Samsung, and other brands\",\n    \"categoryId\": \"{{categoryId}}\",\n    \"taxApplicability\": true,\n    \"tax\": 10\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/subcategories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"subcategories"
+							]
+						},
+						"description": "Create a new sub-category under a category.\n\n**Required Fields:**\n- name (String, unique)\n- image (URL)\n- description (String)\n- categoryId (ObjectId)\n\n**Optional Fields:**\n- taxApplicability (Boolean, defaults to parent category's value)\n- tax (Number, defaults to parent category's value)\n\n**Note:** If taxApplicability and tax are not provided, they will inherit from the parent category."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Sub-Category (With Defaults)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.collectionVariables.set('subCategoryId', response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Laptops\",\n    \"image\": \"https://example.com/laptops.jpg\",\n    \"description\": \"Laptop computers and notebooks\",\n    \"categoryId\": \"{{categoryId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/subcategories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"subcategories"
+							]
+						},
+						"description": "Create a sub-category without specifying tax fields. Tax settings will be inherited from the parent category."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Sub-Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/subcategories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"subcategories"
+							]
+						},
+						"description": "Retrieve all sub-categories from the database"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sub-Categories by Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/subcategories/category/{{categoryId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"subcategories",
+								"category",
+								"{{categoryId}}"
+							]
+						},
+						"description": "Get all sub-categories under a specific category"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sub-Category by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/subcategories/{{subCategoryId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"subcategories",
+								"{{subCategoryId}}"
+							]
+						},
+						"description": "Get a specific sub-category by its ID. You can also use the sub-category name instead of ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sub-Category by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/subcategories/{{subCategoryName}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"subcategories",
+								"{{subCategoryName}}"
+							]
+						},
+						"description": "Get a specific sub-category by its name. You can also use the sub-category ID instead of name."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Sub-Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Updated description for smartphones sub-category\",\n    \"tax\": 12\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/subcategories/{{subCategoryId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"subcategories",
+								"{{subCategoryId}}"
+							]
+						},
+						"description": "Update sub-category attributes. All fields are optional.\n\n**Updatable Fields:**\n- name\n- image\n- description\n- taxApplicability\n- tax"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sub-Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/subcategories/{{subCategoryId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"subcategories",
+								"{{subCategoryId}}"
+							]
+						},
+						"description": "Delete a sub-category by its ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Create Item (Under Sub-Category)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.collectionVariables.set('itemId', response.data._id);",
+									"        pm.collectionVariables.set('itemName', response.data.name);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"iPhone 15 Pro\",\n    \"image\": \"https://example.com/iphone15pro.jpg\",\n    \"description\": \"Latest iPhone model with A17 Pro chip, 256GB storage\",\n    \"subCategoryId\": \"{{subCategoryId}}\",\n    \"taxApplicability\": true,\n    \"tax\": 10,\n    \"baseAmount\": 999,\n    \"discount\": 50,\n    \"totalAmount\": 949\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/items",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"items"
+							]
+						},
+						"description": "Create a new item under a sub-category.\n\n**Required Fields:**\n- name (String, unique)\n- image (URL)\n- description (String)\n- baseAmount (Number)\n- discount (Number, default: 0)\n- taxApplicability (Boolean)\n- tax (Number, required if taxApplicability is true)\n\n**Required (One of):**\n- categoryId (ObjectId) OR\n- subCategoryId (ObjectId)\n\n**Note:** totalAmount is automatically calculated as (baseAmount - discount). You can omit it from the request."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Item (Under Category)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data._id) {",
+									"        pm.collectionVariables.set('itemId2', response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Generic Electronic Item\",\n    \"image\": \"https://example.com/generic.jpg\",\n    \"description\": \"A generic electronic item without specific sub-category\",\n    \"categoryId\": \"{{categoryId}}\",\n    \"taxApplicability\": false,\n    \"tax\": 0,\n    \"baseAmount\": 100,\n    \"discount\": 10\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/items",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"items"
+							]
+						},
+						"description": "Create a new item directly under a category (without sub-category)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/items",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"items"
+							]
+						},
+						"description": "Retrieve all items from the database"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Items by Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/items/category/{{categoryId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"category",
+								"{{categoryId}}"
+							]
+						},
+						"description": "Get all items under a specific category"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Items by Sub-Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/items/subcategory/{{subCategoryId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"subcategory",
+								"{{subCategoryId}}"
+							]
+						},
+						"description": "Get all items under a specific sub-category"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/items/{{itemId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"{{itemId}}"
+							]
+						},
+						"description": "Get a specific item by its ID. You can also use the item name instead of ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/items/{{itemName}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"{{itemName}}"
+							]
+						},
+						"description": "Get a specific item by its name. You can also use the item ID instead of name."
+					},
+					"response": []
+				},
+				{
+					"name": "Search Items by Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/items/search?name=iPhone",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "iPhone",
+									"description": "Search query (case-insensitive)"
+								}
+							]
+						},
+						"description": "Search for items by name. The search is case-insensitive and uses regex matching.\n\n**Query Parameters:**\n- name (String, required) - Search term"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"baseAmount\": 1099,\n    \"discount\": 100\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/items/{{itemId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"{{itemId}}"
+							]
+						},
+						"description": "Update item attributes. All fields are optional.\n\n**Updatable Fields:**\n- name\n- image\n- description\n- taxApplicability\n- tax\n- baseAmount\n- discount\n\n**Note:** totalAmount is automatically recalculated when baseAmount or discount is updated."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/items/{{itemId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"items",
+								"{{itemId}}"
+							]
+						},
+						"description": "Delete an item by its ID"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "categoryId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "categoryName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "subCategoryId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "subCategoryName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "itemId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "itemName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "itemId2",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
+
