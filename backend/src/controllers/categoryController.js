@@ -6,7 +6,7 @@ export const createCategory = async (req, res) => {
     const { name, image, description, taxApplicability, tax } = req.body;
 
     // Validate required fields
-    if (!name || !image || !description) {
+    if (!name  || !image ||  !description) {
       return res.status(400).json({
         success: false,
         message: 'Name, image, and description are required'
