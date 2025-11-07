@@ -173,3 +173,4 @@ curl -X PUT http://localhost:3000/api/items/{itemId} \
 - Auto-calculation: Item totalAmount = baseAmount - discount
 - Timestamps: All resources have `createdAt` and `updatedAt` fields
 
+

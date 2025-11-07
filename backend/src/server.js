@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
@@ -25,10 +24,6 @@ const app = express();
 app.use(helmet());
 app.use(compression());
 app.use(morgan('dev'));
-app.use(cors({
-  origin: process.env.FRONTEND_URL || "*",
-  credentials: true
-}));
 
 // Rate limiting
 const limiter = rateLimit({
